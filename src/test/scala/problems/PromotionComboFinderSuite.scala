@@ -5,6 +5,7 @@ import munit.CatsEffectSuite
 import problems.PromotionComboFinder
 import problems.PromotionComboFinder.allCombinablePromotions
 import problems.PromotionComboFinder.combinablePromotions
+import scala.concurrent.duration.Duration
 
 class PromotionComboFinderSuite extends CatsEffectSuite:
 
@@ -115,13 +116,6 @@ class PromotionComboFinderSuite extends CatsEffectSuite:
         ),
         PromotionCombo(
           Seq(
-            "P2",
-            "P6",
-            "P7"
-          )
-        ),
-        PromotionCombo(
-          Seq(
             "P1",
             "P2",
             "P6",
@@ -145,11 +139,13 @@ class PromotionComboFinderSuite extends CatsEffectSuite:
         )
       ).map(_.promotionCodes.toSet)
     )
-
   }
 
-  import cats.effect.std.Dispatcher
-
-  val dispatcher = ResourceFunFixture(Dispatcher.parallel[IO])
+  test("A big test") {
+    val size = 30
+    val promos = (0 until size).map(i => Promotion(f"P$i", (i+1 to i+3).map(j => f"P${j%size}").toSeq)).toSeq
+    
+    assert(allCombinablePromotions(promos).nonEmpty)
+  }
 
 end PromotionComboFinderSuite
