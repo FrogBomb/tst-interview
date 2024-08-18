@@ -107,19 +107,12 @@ class PromotionComboFinderSuite extends CatsEffectSuite:
       Set(
         PromotionCombo(
           Seq(
-            "P5",
-            "P6",
-            "P7"
-          )
-        ),
-        PromotionCombo(
-          Seq(
             "P1",
             "P5",
             "P6",
             "P7"
           )
-        ),,
+        ),
         PromotionCombo(
           Seq(
             "P2",
