@@ -142,7 +142,7 @@ class PromotionComboFinderSuite extends CatsEffectSuite:
   }
 
   test("A big test") {
-    val size = 30
+    val size = 35
     // Promos here do not include the previous two, or the next two... in a loop
     val promos = (0 until size).map(i => Promotion(f"P$i", Seq(i-2 + size, i-1 + size, i+1, i+2).map(j => f"P${j%size}").toSeq)).toSeq
     val res = allCombinablePromotions(promos)
