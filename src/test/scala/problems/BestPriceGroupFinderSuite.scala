@@ -1,6 +1,7 @@
 package problems
 
 import cats.effect.*
+import model.price.*
 import munit.CatsEffectSuite
 import problems.*
 import problems.BestPriceForGroupFinder.getBestGroupPrices
@@ -35,7 +36,7 @@ class BestPriceGroupFinderSuite extends CatsEffectSuite:
       Rate("S3", "Senior"),
       Rate("P1", "Premium User"),
       Rate("P2", "Premium User"),
-      Rate("P3", "Premium User"),
+      Rate("P3", "Premium User")
     )
     val prices = List(
       CabinPrice("CA", "M1", 200.00),
@@ -67,8 +68,7 @@ class BestPriceGroupFinderSuite extends CatsEffectSuite:
         BestGroupPrice("CA", "P1", 125.00, "Premium User"),
         BestGroupPrice("CB", "M1", 230.00, "Military"),
         BestGroupPrice("CB", "S2", 170.00, "Senior"),
-        BestGroupPrice("CB", "P1", 170.45, "Premium User"),
-
+        BestGroupPrice("CB", "P1", 170.45, "Premium User")
       )
     )
   }

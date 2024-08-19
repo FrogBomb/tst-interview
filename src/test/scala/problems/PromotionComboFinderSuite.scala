@@ -1,6 +1,7 @@
 package problems
 
 import cats.effect.*
+import model.promotions.*
 import munit.CatsEffectSuite
 import problems.PromotionComboFinder
 import problems.PromotionComboFinder.allCombinablePromotions

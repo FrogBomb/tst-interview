@@ -3,10 +3,11 @@ package problems
 import cats.effect.*
 import scala.annotation.tailrec
 import cats.instances.boolean
+import model.promotions.*
 
 object PromotionComboFinder extends IOApp.Simple {
 
-  /* 
+  /*
     Find all combinable promotions
    */
   def allCombinablePromotions(
@@ -26,27 +27,31 @@ object PromotionComboFinder extends IOApp.Simple {
             val (cannotCombineCodes, canCombineCodes) = combo.partition(code =>
               promoToConsiderRestrictions.cannotCombineWith(code)
             )
-            if (cannotCombineCodes.isEmpty) { 
+            if (cannotCombineCodes.isEmpty) {
               // If this is true, we can just keep the code in the existing combo, and move to the next
               Set(combo)
             } else {
               // Otherwise, we can produce two new sets: one with the restictions, and one without this code.
-              // Note: There is a chance a combo without this code is a subset of another combo we produce at this iteration. 
-              //   This will be handled in a filter after we are done. 
+              // Note: There is a chance a combo without this code is a subset of another combo we produce at this iteration.
+              //   This will be handled in a filter after we are done.
               Set(combo - promoToConsiderRestrictions.code, canCombineCodes)
             }
           // The combo does not contain the current promo we are considering restrictions for, so we don't need to change anything.
           case combo => Set(combo)
         }
         // We may produce a group that is a strict subset of another group. Remove those.
-        combosWithNewRestrictions.filter(comboGroup => combosWithNewRestrictions.forall(otGroup => otGroup.equals(comboGroup) | (!comboGroup.subsetOf(otGroup))))
+        combosWithNewRestrictions.filter(comboGroup =>
+          combosWithNewRestrictions.forall(otGroup =>
+            otGroup.equals(comboGroup) | (!comboGroup.subsetOf(otGroup))
+          )
+        )
       })
       .map(combo => PromotionCombo(combo.toSeq.sorted))
       .toSeq
 
   /*
     Find all promotion combos that can be combined with a given code
-    */
+   */
   def combinablePromotions(
       promotionCode: String,
       allPromotions: Seq[Promotion]
@@ -82,17 +87,4 @@ object PromotionComboFinder extends IOApp.Simple {
       } yield { IO.unit }
     }
   } yield ExitCode.Success
-}
-
-case class Promotion(code: String, notCombinableWith: Seq[String]) {
-  assert(
-    !notCombinableWith.contains(code),
-    f"Promotion must be combinable with itself: $code"
-  )
-  val cannotCombineSet = notCombinableWith.toSet
-  def cannotCombineWith(code: String): Boolean = cannotCombineSet.contains(code)
-}
-
-case class PromotionCombo(promotionCodes: Seq[String]) {
-  def +(promotionCode: String) = PromotionCombo(promotionCodes :+ promotionCode)
 }

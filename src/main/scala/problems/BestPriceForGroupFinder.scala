@@ -1,6 +1,7 @@
 package problems
 
 import cats.effect.*
+import model.price.*
 
 object BestPriceForGroupFinder extends IOApp.Simple {
   def getBestGroupPrices(
@@ -62,23 +63,4 @@ object BestPriceForGroupFinder extends IOApp.Simple {
     _ <- IO.println(res.mkString("\n"))
   } yield ExitCode.Success
 
-}
-
-case class Rate(rateCode: String, rateGroup: String)
-case class CabinPrice(
-    cabinCode: String,
-    rateCode: String,
-    price: BigDecimal
-)
-case class BestGroupPrice(
-    cabinCode: String,
-    rateCode: String,
-    price: BigDecimal,
-    rateGroup: String
-)
-
-case class CabinCodeAndGroup(cabinCode: String, rateGroup: String)
-case class RateCodeAndPrice(rateCode: String, price: BigDecimal) {
-  def min(that: RateCodeAndPrice): RateCodeAndPrice =
-    if (price > that.price) that else this
 }
