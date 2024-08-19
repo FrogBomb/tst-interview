@@ -2,13 +2,13 @@ package problems
 
 import cats.effect.*
 import model.promotions.*
-import munit.CatsEffectSuite
+import munit.FunSuite
 import problems.PromotionComboFinder
 import problems.PromotionComboFinder.allCombinablePromotions
 import problems.PromotionComboFinder.combinablePromotions
 import scala.concurrent.duration.Duration
 
-class PromotionComboFinderSuite extends CatsEffectSuite:
+class PromotionComboFinderSuite extends FunSuite:
 
   test(
     "example for PromotionComboFinder matches documented problem result"

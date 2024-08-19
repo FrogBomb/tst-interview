@@ -2,11 +2,11 @@ package problems
 
 import cats.effect.*
 import model.price.*
-import munit.CatsEffectSuite
+import munit.FunSuite
 import problems.*
 import problems.BestPriceForGroupFinder.getBestGroupPrices
 
-class BestPriceGroupFinderSuite extends CatsEffectSuite:
+class BestPriceGroupFinderSuite extends FunSuite:
 
   test(
     "example for BestPriceForGroupFinder matches documented problem result"
